@@ -1,0 +1,56 @@
+{% extends 'home_p.html'%}
+
+{% block css %} {% endblock %}
+
+{% block content %}
+<div style="margin-top: 120px;width: 500px;height: 40px" class="container">
+<span style="color: red">
+    {% if error %}
+        {{ error }}
+    {% endif %}
+</span>
+</div>
+    <div style="width: 800px;" class="container">
+<form action="/add/" method="POST" role="form" class="form-horizontal">
+    <div style="margin-top: 100px">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">IP</label>
+            <div class="col-sm-4">
+                {{ obj.ip }}
+            </div>
+            {% if obj.errors.ip%}
+            <span class="span_error"> {{ obj.errors.ip.0 }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">主机名</label>
+            <div class="col-sm-4">
+                {{ obj.hostname }}
+            </div>
+            {% if obj.errors.hostname%}
+            <span class="span_error"> {{ obj.errors.hostname.0 }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">主机功能</label>
+            <div class="col-sm-4">
+                {{ obj.fn }}
+            </div>
+            {% if obj.errors.fn%}
+            <span class="span_error"> {{ obj.errors.fn.0 }}</span>
+            {% endif %}
+        </div>
+        <div style="margin-left: 330px">
+        <button type="submit" class="btn btn-primary">提交</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+    $('#add').addClass('active')
+    </script>
+{% endblock %}

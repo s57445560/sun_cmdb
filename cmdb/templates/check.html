@@ -1,0 +1,21 @@
+<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myzc" onclick="check_ip(this);">
+修改
+</button>
+<div class="modal fade" id="myzc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header clearfix">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div style="width: 130px;float: left"><h4 class="modal-title" id="myModalLabel">信息修改</h4></div>
+              <div style="width: 200px;float: right"><h4 class="modal-title help_h6" id="myModalLabel" style="color: red"></h4></div>
+          </div>
+            <div class="modal-body">
+            {% include 'check_p.html' %}
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="check_close">关闭</button>
+            <button type="button" class="btn btn-primary" onclick="submit_modify();">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>

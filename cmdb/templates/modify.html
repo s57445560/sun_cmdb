@@ -1,0 +1,107 @@
+{% extends 'home_p.html'%}
+
+{% block css %}
+    <style>
+     .hide{
+         display: none;
+     }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container" style="height: 500px;margin-top: 60px">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+              <td style="width: 100px" class="info">修改键</td>
+              <th style="width: 180px" class="info">ip</th>
+              <th style="width: 320px" class="info">主机名</th>
+              <th style="width: 220px" class="info">功能</th>
+              <th style="width: 220px" class="info">创建者</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in user_list %}
+              <tr>
+                <td>{% include 'check.html' %}</td>
+                 <td id="ip">{{ i.ip }}</td>
+                 <td id="hostname">{{ i.hostname }}</td>
+                <td id="fn">{{ i.fn }}</td>
+                <td>{{ i.user_id__user }}</td>
+              </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <div class="container" style="text-align: center">
+            <nav>
+              <ul class="pagination">
+                <li ><a href="#" onclick="reduce(this)">&laquo;</a></li>
+                  {% for item in  fy_num  %}
+                        <li><a class="hide" href="/modify/{{ item }}" a_ck="{{ item }}">{{ item }}</a></li>
+                  {% endfor %}
+                <li><a href="#" onclick="add(this)">&raquo;</a></li>
+              </ul>
+                <span style="margin-left: -100px;color: #428bca">共{{ fy_num|last }}页</span>
+            </nav>
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/check_modify.js"></script>
+    <script>
+        $('#modify').addClass('active');
+        var a_num = window.location.href.match(/(\d+)/g).slice(-1).join();
+        $(function () {
+
+            $("a[a_ck='"+a_num +"']").parent().addClass('active');
+            if(a_num == {{ fy_num|last }}){
+                console.log('aa');
+                $("a[a_ck='"+(parseInt(a_num)) +"']").removeClass('hide');
+                $("a[a_ck='"+(parseInt(a_num)-1) +"']").removeClass('hide');
+                $("a[a_ck='"+(parseInt(a_num)-2) +"']").removeClass('hide');
+            }else if(3 <= {{ fy_num|last }} && (parseInt(a_num)+1) == {{ fy_num|last }}){
+                console.log('bb');
+                $("a[a_ck='"+(parseInt(a_num)-1) +"']").removeClass('hide');
+                $("a[a_ck='"+(parseInt(a_num)) +"']").removeClass('hide');
+                $("a[a_ck='"+(parseInt(a_num)+1) +"']").removeClass('hide');
+            }else if( 3 <= {{ fy_num|last }} ){
+
+                $("a[a_ck='"+(parseInt(a_num)) +"']").removeClass('hide');
+                $("a[a_ck='"+(parseInt(a_num)+1) +"']").removeClass('hide');
+                $("a[a_ck='"+(parseInt(a_num)+2) +"']").removeClass('hide');
+            }else if(a_num == 1 && {{ fy_num|last }}>=2){
+                console.log('cc');
+                $("a[a_ck='"+(parseInt(a_num)) +"']").removeClass('hide');
+                $("a[a_ck='"+(parseInt(a_num)+1) +"']").removeClass('hide');
+            }
+        });
+        function add(ths) {
+            if (a_num <{{ fy_num|last }}) {
+                window.location.href = '/modify/' + (parseInt(a_num) + 1);
+                $("a[a_ck='"+(parseInt(a_num) + 1) +"']").removeClass('hide');
+            }
+        }
+        function reduce(ths) {
+            if (a_num >{{ fy_num|first }}) {
+                window.location.href = '/modify/' + (parseInt(a_num) - 1);
+            }
+        }
+    function check_ip(ths){
+        ip = $(ths).parent().parent().find('#ip').text();
+        hostname = $(ths).parent().parent().find('#hostname').text();
+        fn = $(ths).parent().parent().find('#fn').text();
+        $('input[name="ip"]').val(ip);
+        $('input[name="hostname"]').val(hostname);
+        $('input[name="fn"]').val(fn);
+        $('.span_error').text('');
+        $('.help_h6').text('');
+    }
+
+    </script>
+
+{% endblock %}

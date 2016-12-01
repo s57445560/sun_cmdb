@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.0.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        .pg-head{
+            height: 50px;
+            background-color: #ECF5FF;
+            line-height: 50px;
+        }
+        .clearfix:after{
+            content: '.';
+            clear: both;
+            display: block;
+            visibility: hidden;
+            height: 0;
+        }
+        .span_error{
+            color: red;
+        }
+        .pg-body{
+
+        }
+        .pg-body .menu{
+            position: absolute;
+            background-color: #D2E9FF;
+{#            height: 900px;#}
+            top: 50px;
+            bottom: 0;
+            width: 230px;
+        }
+        .pg-body .content{
+{#            background-color: red;#}
+            position: absolute;
+
+            top:50px;
+            left: 230px;
+            right: 0;
+            bottom: 100px;
+        }
+    </style>
+    {% block css %} {% endblock %}
+</head>
+<body>
+    <div class="pg-head clearfix">
+        <div style="width: 200px;float: left">
+            <img src="/static/img/logo.png" style="height: 50px"/>
+        </div>
+        <div style="width: 600px;float: left;margin-left: 30px;margin-top: 6px;">
+            <ul class="nav nav-pills nav-justified btn-sm" role="tablist">
+              <li role="presentation" id="home_pg"><a href="/home/">主页</a></li>
+              <li role="presentation"><a href="#">待开发</a></li>
+              <li role="presentation"><a href="#">待开发</a></li>
+                <li role="presentation"><a href="#">待开发</a></li>
+            </ul>
+        </div>
+        <div style="float: right;width: 300px;height: 50px;line-height: 50px">
+            {% if not user %}
+            <button type="button" class="btn btn-primary btn-2g" data-toggle="modal" data-target="#myModal">
+                登陆
+            </button>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header clearfix">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <div style="width: 130px;float: left"><h4 class="modal-title" id="myModalLabel">用户登陆页面</h4></div>
+                          <div style="width: 200px;float: right"><h4 class="modal-title help_h4" id="myModalLabel" style="color: red"></h4></div>
+                      </div>
+                        <div class="modal-body">
+                        {% include 'form_p.html' %}
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="submit_login();">提交</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+{#            <button type="button" class="btn btn-primary">注册</button>#}
+                <button type="button" class="btn btn-primary btn-2g" data-toggle="modal" data-target="#myzc">
+                注册
+            </button>
+            <div class="modal fade" id="myzc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header clearfix">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <div style="width: 130px;float: left"><h4 class="modal-title" id="myModalLabel">用户注册页面</h4></div>
+                          <div style="width: 200px;float: right"><h4 class="modal-title help_h5" id="myModalLabel" style="color: red"></h4></div>
+                      </div>
+                        <div class="modal-body">
+                        {% include 'form_p_zc.html' %}
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="submit_register();">提交</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% else %}
+
+                <a href="/logout/" class="btn btn-primary btn-2g active" role="button">退出</a>
+            {% endif %}
+        </div>
+        {% if user %}
+        <div style="height: 50px;width: 150px;float: right;line-height: 50px">
+            <span style="color: #843534">欢迎 {{ user }} 登陆</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="pg-body">
+        <div class="menu">
+            <ul class="nav nav-pills nav-stacked" role="tablist">
+                <li id="add"><a href="/add/">增加主机信息</a></li>
+                <li id="modify"><a  href="/modify/1/">查看修改主机信息</a></li>
+                <li id="select"><a  href="/select/">待开发</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <script src="/static/js/form_login.js"></script>
+    {% block js %} {% endblock %}
+</body>
+</html>
